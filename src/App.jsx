@@ -1,6 +1,6 @@
 import { use, useState } from 'react'
 import axios from "axios";
-import { Stack, Box, Button, TextField, Typography, InputAdornment, AlertTitle, IconButton, Alert, Snackbar, Card, CardContent } from '@mui/material';
+import { Stack, Box, Button, TextField, Typography, InputAdornment, CircularProgress, AlertTitle, IconButton, Alert, Snackbar, Card, CardContent, Skeleton } from '@mui/material';
 import LiveHelpOutlinedIcon from '@mui/icons-material/LiveHelpOutlined';
 
 function App() {
@@ -10,9 +10,13 @@ function App() {
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   const obtenerRespuesta = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    setCargando(true);
 
     const preguntaValida = pregunta.trim();
     const tieneSignos = preguntaValida.startsWith("?") && preguntaValida.endsWith("?");
@@ -37,12 +41,15 @@ function App() {
       setTitulo("Error");
       setMensaje("La pregunta debe tener signos de pregunta (¿ y ?)")
       setSeverity("error");
+    } finally {
+      setLoading(false);
+      setCargando(false);
     }
   };
 
   return (
     <Box component="section" sx={{
-      minHeight: "100vh",
+      height: "100dvh",
       minWidth: "100vw",
       background: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
       display: "flex",
@@ -183,7 +190,11 @@ function App() {
                 width: "100%"
 
               }} disableElevation>
-                Enviar
+                {loading ? "Cargando..." : (
+                  <>
+                    Preguntar
+                  </>
+                )}
               </Button>
             </Box>
           </Stack>
@@ -207,36 +218,51 @@ function App() {
             backgroundColor: "rgba(0, 0, 0, 0.1)",
             boxShadow: 6,
           }}>
-            <Box
-              component="img"
-              alt="Respuesta de la API"
-              src={gif}
-              sx={{
-                height: {
-                  xs: "auto",
-                  sm: "auto",
-                  md: 360,
-                  lg: 350,
-                  xl: 300
-                },
-              }}
-            >
-            </Box>
-            <Typography variant="h1" sx={{
-              mb: 1,
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              fontSize: {
-                xs: "1.1rem",
-                sm: "1.2rem",
-                md: "1.6rem",
-                lg: "1.6rem",
-                xl: "1.5rem"
-              },
-              textAlign: "center"
-            }}>{respuesta}</Typography>
+            {cargando ? (
+              <CircularProgress sx={{
+                size: 70,
+                textAlign: "center",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)"
+              }} />
+            ) : (
+              <>
+                <Box
+                  component="img"
+                  alt="Respuesta de la API"
+                  src={gif}
+                  sx={{
+                    height: {
+                      xs: "auto",
+                      sm: "auto",
+                      md: 360,
+                      lg: 350,
+                      xl: 300
+                    },
+                  }}
+                >
+                </Box>
+                <Typography variant="h1" sx={{
+                  mb: 1,
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  fontSize: {
+                    xs: "1.2rem",
+                    sm: "1.2rem",
+                    md: "1.9rem",
+                    lg: "1.9rem",
+                    xl: "1.8rem"
+                  },
+                  textAlign: "center"
+                }}>
+                  {respuesta}
+                </Typography>
+              </>
+            )}
           </Stack>
         )}
       </Stack>
