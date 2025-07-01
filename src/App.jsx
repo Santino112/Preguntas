@@ -7,6 +7,9 @@ function App() {
   const [respuesta, setRespuesta] = useState("");
   const [pregunta, setPregunta] = useState("");
   const [gif, setGif] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
 
   const obtenerRespuesta = async (event) => {
     event.preventDefault();
@@ -16,7 +19,9 @@ function App() {
     const terminaConSigno = preguntaValida.endsWith("?");
 
     if (!tieneSignos && !terminaConSigno) {
-      alert("Debe poseer los 2 signos");
+      setTitulo("Error");
+      setMensaje("La pregunta debe tener signos de pregunta (¿ y ?)")
+      setSeverity("error");
       return;
     }
 
@@ -29,6 +34,9 @@ function App() {
       }
     } catch (error) {
       console.error("Error al obtener infomración:", error)
+      setTitulo("Error");
+      setMensaje("La pregunta debe tener signos de pregunta (¿ y ?)")
+      setSeverity("error");
     }
   };
 
@@ -36,24 +44,47 @@ function App() {
     <Box component="section" sx={{
       minHeight: "100vh",
       minWidth: "100vw",
-      backgroundImage: 'linear-gradient(115deg, rgba(84, 41, 111, 0.8), rgba(37, 11, 57, 0.7))',
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
+      background: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
-      overflow: "hidden",
     }}>
+      <Snackbar
+        open={Boolean(mensaje)}
+        autoHideDuration={3000}
+        onClose={() => setMensaje(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ mt: "2rem" }}
+      >
+        <Alert
+          onClose={() => setMensaje(null)}
+          variant="filled"
+          severity={severity}
+          sx={{
+            color: "#ffff",
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: 300,
+              lg: 400,
+              xl: 400
+            }
+          }}
+        >
+          {mensaje}
+        </Alert>
+      </Snackbar>
       <Stack
-        direction="column"
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-around"
         alignItems="center"
         spacing={5}
-        sx={{ width: "100%", p: 3, }}
+        sx={{ width: "100%", p: 3 }}
       >
         <Stack
           direction="row"
+          alignItems="center"
+          justifyContent="center"
           sx={{
             width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 500 },
             backgroundColor: "#212121",
@@ -63,8 +94,8 @@ function App() {
             height: {
               xs: "auto",
               sm: "auto",
-              md: 300,
-              lg: 300,
+              md: 360,
+              lg: 350,
               xl: 300
             },
             backdropFilter: "blur(30px)",
@@ -72,7 +103,7 @@ function App() {
             boxShadow: 6,
           }}
         >
-          <Stack spacing={5} direction="column" alignItems="center" sx={{ width: "100%", color: "white", fontFamily: "Inter" }}>
+          <Stack spacing={5} direction="column" justifyContent="center" alignItems="center" sx={{ width: "100%", color: "white", fontFamily: "Inter" }}>
             <Box>
               <Typography variant="h5" sx={{
                 fontWeight: 600,
@@ -86,20 +117,19 @@ function App() {
                 },
                 textAlign: "center"
               }}>
-                Hola bienvenido de vuelta!
+                Hola, bienvenido de vuelta!
               </Typography>
               <Typography variant="h5" sx={{
-                mb: 1,
                 fontSize: {
                   xs: "1.1rem",
                   sm: "1.2rem",
                   md: "1.6rem",
-                  lg: "1.6rem",
+                  lg: "1.5rem",
                   xl: "1.5rem"
                 },
                 textAlign: "center"
               }}>
-                Ingresa una pregunta y te la responderemos!
+                Ingresa una pregunta y te la responderemos con si o no!
               </Typography>
             </Box>
             <Box
@@ -158,60 +188,57 @@ function App() {
             </Box>
           </Stack>
         </Stack>
-        <Stack
-          spacing={2}
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
+        {gif && (
+          <Stack sx={{
+            position: "relative",
+            width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 500 },
+            backgroundColor: "#212121",
+            p: 3,
+            borderRadius: 2,
+            justifyContent: "center",
             height: {
               xs: "auto",
               sm: "auto",
-              md: 300,
-              lg: 300,
+              md: 360,
+              lg: 350,
               xl: 300
             },
-            overflowY: "auto",
-            backgroundColor: "#121212",
-            p: 3,
-            borderRadius: 2,
-            color: "white",
             backdropFilter: "blur(30px)",
             backgroundColor: "rgba(0, 0, 0, 0.1)",
             boxShadow: 6,
-            width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 500 },
-          }}
-        >
-          <Typography sx={{
-            mb: 1,
-            fontSize: {
-              xs: "1.1rem",
-              sm: "1.2rem",
-              md: "1.6rem",
-              lg: "1.6rem",
-              xl: "1.5rem"
-            },
-            textAlign: "center"
-          }}>{respuesta}</Typography>
-          {gif && (
+          }}>
             <Box
               component="img"
               alt="Respuesta de la API"
               src={gif}
               sx={{
-                width: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "35%",
-                  lg: "40%",
-                  xl: "40%",
+                height: {
+                  xs: "auto",
+                  sm: "auto",
+                  md: 360,
+                  lg: 350,
+                  xl: 300
                 },
-                backgroundColor: "#f9f9f9",
-                boxShadow: 6,
               }}
-            />
-          )}
-        </Stack>
+            >
+            </Box>
+            <Typography variant="h1" sx={{
+              mb: 1,
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              fontSize: {
+                xs: "1.1rem",
+                sm: "1.2rem",
+                md: "1.6rem",
+                lg: "1.6rem",
+                xl: "1.5rem"
+              },
+              textAlign: "center"
+            }}>{respuesta}</Typography>
+          </Stack>
+        )}
       </Stack>
     </Box>
   )
