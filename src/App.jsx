@@ -190,7 +190,7 @@ function App() {
                 sm: "auto",
                 md: 300,
                 lg: 300,
-                xl: 350
+                xl: 360
               },
               backgroundColor: "#121212",
               borderRadius: 2,
@@ -229,7 +229,7 @@ function App() {
                       sm: 300,
                       md: 300,
                       lg: 300,
-                      xl: 350
+                      xl: 360
                     },
                     backgroundColor: "#f9f9f9",
                     boxShadow: 6,
