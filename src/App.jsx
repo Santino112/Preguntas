@@ -54,8 +54,8 @@ function App() {
         )}
       </Snackbar>
       <Box component="section" sx={{
-        minHeight: "100vh",
-        minWidth: "100vw",
+        minHeight: "100dvh",
+        minWidth: "100dvw",
         backgroundImage: 'linear-gradient(10deg, rgba(25, 18, 29, 0.8), rgba(2, 85, 56, 0.7))',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
