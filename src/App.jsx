@@ -9,10 +9,12 @@ function App() {
   const [mensaje, setMensaje] = useState("");
   const [titulo, setTitulo] = useState("");
   const [severity, setSeverity] = useState('');
+  const [loading, setLoading] = useState(false);
   const [gif, setGif] = useState("");
 
   const obtenerRespuesta = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const preguntaValida = pregunta.trim();
     const tieneSignos = preguntaValida.startsWith("?") && preguntaValida.endsWith("?");
@@ -22,6 +24,7 @@ function App() {
       setTitulo("Error");
       setMensaje('Su pregunta debe poseer signo de pregunta');
       setSeverity("error");
+      setLoading(false);
       return;
     }
 
@@ -34,6 +37,8 @@ function App() {
       }
     } catch (error) {
       console.error("Error al obtener infomración:", error)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,7 +161,7 @@ function App() {
                     mb: 4
                   }}
                 />
-                <Button variant="contained" type="submit" sx={{
+                <Button variant="contained" type="submit" disableElevation sx={{
                   cursor: "pointer",
                   fontSize: "1rem",
                   color: "white",
@@ -171,9 +176,8 @@ function App() {
                   },
                   boxShadow: 3,
                   width: "100%"
-
-                }} disableElevation>
-                  Enviar
+                }}>
+                  {loading ? 'Cargando...' : 'Enviar'}
                 </Button>
               </Box>
             </Stack>
