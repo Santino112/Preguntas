@@ -56,7 +56,7 @@ function App() {
       <Box component="section" sx={{
         minHeight: "100vh",
         minWidth: "100vw",
-        backgroundImage: 'linear-gradient(115deg, rgba(84, 41, 111, 0.8), rgba(37, 11, 57, 0.7))',
+        backgroundImage: 'linear-gradient(10deg, rgba(25, 18, 29, 0.8), rgba(2, 85, 56, 0.7))',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -106,7 +106,7 @@ function App() {
                   },
                   textAlign: "center"
                 }}>
-                  Hola, bienvenido de vuelta!
+                  Hola, bienvenido de vuelta
                 </Typography>
                 <Typography variant="h5" sx={{
                   mb: 1,
@@ -119,7 +119,7 @@ function App() {
                   },
                   textAlign: "center"
                 }}>
-                  Ingresa una pregunta y te la responderemos!
+                  Ingrese una pregunta y la responderemos
                 </Typography>
               </Box>
               <Box
@@ -160,9 +160,9 @@ function App() {
                   cursor: "pointer",
                   fontSize: "1rem",
                   color: "white",
-                  backgroundColor: "#2485e9",
+                  backgroundColor: "#2487e9a9",
                   "&:hover": {
-                    backgroundColor: "#1f73ca",
+                    backgroundColor: "#1f72ca7e",
                     color: "white",
                   },
                   "&.Mui-disabled": {
@@ -179,15 +179,14 @@ function App() {
             </Stack>
           </Stack>
           <Stack
-            spacing={2}
             direction="column"
             justifyContent="center"
             alignItems="center"
             sx={{
               position: 'relative',
               height: {
-                xs: "auto",
-                sm: "auto",
+                xs: 300,
+                sm: 300,
                 md: 300,
                 lg: 300,
                 xl: 360
