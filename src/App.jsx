@@ -192,7 +192,6 @@ function App() {
                 lg: 300,
                 xl: 350
               },
-              overflowY: "auto",
               backgroundColor: "#121212",
               borderRadius: 2,
               color: "white",
