@@ -197,6 +197,7 @@ function App() {
               },
               backgroundColor: "#121212",
               borderRadius: 2,
+              border: respuesta ? `3px solid ${respuesta === 'yes' ? '#2BEB26' : '#F22222'}` : 'none',
               color: "white",
               backdropFilter: "blur(30px)",
               backgroundColor: "rgba(0, 0, 0, 0.1)",
